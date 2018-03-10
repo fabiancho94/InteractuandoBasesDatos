@@ -1,0 +1,25 @@
+{
+  "name": "nodejs_mongo",
+  "version": "1.0.0",
+  "description": "Agenda en node js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabiancho94/InteractuandoBasesDatos.git"
+  },
+  "keywords": [
+    "https://github.com/fabiancho94/InteractuandoBasesDatos.git"
+  ],
+  "author": "Fabian Velez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabiancho94/InteractuandoBasesDatos/issues"
+  },
+  "homepage": "https://github.com/fabiancho94/InteractuandoBasesDatos#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4
