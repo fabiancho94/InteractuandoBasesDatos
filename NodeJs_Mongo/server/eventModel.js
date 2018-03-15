@@ -10,6 +10,6 @@ const mongoose = require('mongoose')
 		horaFin:{ type: Date},
 		diaCompleto:{ type: Boolean, require: true }
 	})
-  
-	let EventModel = mongoose.model('Evento', EventSchema)
-	module.exports = EventSchema
+
+	let EventModel = mongoose.model('Event', EventSchema)
+	module.exports = EventModel

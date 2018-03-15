@@ -17,12 +17,13 @@ mongoose.connect('mongodb://localhost/agenda')
 
 usuarioInicial()
 
+
+
+app.use(express.static('client'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.use(express.static('client'))
-
-app.use('/event', Routing)
+app.use('/events', Routing)
 
 Server.listen(PORT, function(){
   console.log('Servidor escuchando en el puerto : ' + PORT);

@@ -22,4 +22,7 @@
   "homepage": "https://github.com/fabiancho94/InteractuandoBasesDatos#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4
+    "express": "^4.16.2",
+    "mongoose": "^5.0.9"
+  }
+}
