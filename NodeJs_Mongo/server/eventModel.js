@@ -2,13 +2,11 @@ const mongoose = require('mongoose')
 	const Schema = mongoose.Schema
 
 	let EventSchema = new Schema({
-		id:{ type: Number, require: true, unique:true },
-		titulo:{ type: String, require: true },
-		fechaInicio:{ type: Date },
-		horaInicio:{ type: Date},
-		fechaFin:{ type: Date},
-		horaFin:{ type: Date},
-		diaCompleto:{ type: Boolean, require: true }
+		title:{ type: String, require: true },
+		start:{ type: Date },
+		start_hour:{ type: Date},
+		end:{ type: Date},
+		end_hour:{ type: Date}
 	})
 
 	let EventModel = mongoose.model('Event', EventSchema)

@@ -46,6 +46,7 @@ class EventManager {
                     end: end
                 }
                 $.post(url, ev, (response) => {
+                  console.log("hice la peticion a " + url);
                     alert(response)
                 })
                 $('.calendario').fullCalendar('renderEvent', ev)
@@ -56,13 +57,14 @@ class EventManager {
     }
 
     inicializarFormulario() {
+      $(document).ready(function() {
         $('#start_date, #titulo, #end_date').val('');
         $('#start_date, #end_date').datepicker({
             dateFormat: "yy-mm-dd"
         });
         $('.timepicker').timepicker({
             timeFormat: 'HH:mm:ss',
-            interval: 30,
+           interval: 30,
             minTime: '5',
             maxTime: '23:59:59',
             defaultTime: '',
@@ -71,6 +73,7 @@ class EventManager {
             dropdown: true,
             scrollbar: true
         });
+      })
         $('#allDay').on('change', function(){
             if (this.checked) {
                 $('.timepicker, #end_date').attr("disabled", "disabled")
