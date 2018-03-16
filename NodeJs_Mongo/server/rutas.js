@@ -47,24 +47,51 @@ Router.post('/new', function (req, res){
   })
 
   Router.post('/delete/:id', function(req, res) {
-
-      Events.remove({id: req.params.id}, function(error) {
-          if(error) {
-              res.status(500)
-              res.json(error)
-          }
-          res.send("Registro eliminado")
-      })
+    let uid = req.params.id
+    Events.remove({id: uid}, function(error) {
+        if(error) {
+            res.status(500)
+            res.json(error)
+        }
+        res.send("Registro eliminado")
+    })
   })
-  Router.post('/update/:id', function(req, res) {
-    Events.find({}).exec((error, resultado)=>{
-      if(error) res.json(error)
-      console.log(resultado);
-      Events.update({id:req.body.id},req.body,(err,act) =>{
-        if(err)res.json(err)
-        res.send("Evento Actualizado")
-      } )
+  Router.post('/update', function(req, res) {
+
+    Events.findOne({id: req.body.id}).exec(function(err, doc){
+        if (err) {
+            res.status(500)
+            res.json(err)
+        }
+        console.log(doc);
+
+        Events.update({id: req.body.id},{start: req.body.start},(error,resultado)=>{
+          if(error)res(error)
+          console.log(resultado);
+          res.send("Evento actualizado")
+                })
     })
 
+
+    //let data = new Events({
+        //  id: req.body.id,
+        //  title: req.body.title,
+      //    start: req.body.start,
+      //    end: req.body.end
+    //    })
+  //  let nuevoEvento = req.body
+  //  Events.remove({id: req.body.id},(err)=>{
+  //    if(err)res.json(err)
+  //  })
+  //  data.save((err)=>{
+      //if (err){
+        //res.status(500)
+      //  res.json(err)
+    //  }
+  //    res.send("Registro Actualizado")
+//    })
+
+
   })
+
 module.exports= Router
