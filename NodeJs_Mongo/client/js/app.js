@@ -1,4 +1,6 @@
 
+'use strict';
+
 class EventManager {
     constructor() {
         this.urlBase = "/events"
@@ -12,6 +14,11 @@ class EventManager {
         $.get(url, (response) => {
             this.inicializarCalendario(response)
         })
+    }
+    actualizarEvento(evento) {
+        $.post('/events/update/' + evento._id, {start: evento.start.format(), end: evento.end.format(), id: evento._id}, (response) => {
+            console.log(response);
+        });
     }
 
     eliminarEvento(evento) {
@@ -45,7 +52,7 @@ class EventManager {
                     start: start,
                     end: end
                 }
-                $.post(url, ev, (response) => {
+                $.post(url,ev, (response) => {
                   console.log("hice la peticion a " + url);
                     alert(response)
                 })
@@ -84,41 +91,44 @@ class EventManager {
     }
 
     inicializarCalendario(eventos) {
-        $('.calendario').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,basicDay'
-            },
-            defaultDate: '2016-11-01',
-            navLinks: true,
-            editable: true,
-            eventLimit: true,
-            droppable: true,
-            dragRevertDuration: 0,
-            timeFormat: 'H:mm',
-            eventDrop: (event) => {
-                this.actualizarEvento(event)
-            },
-            events: eventos,
-            eventDragStart: (event,jsEvent) => {
-                $('.delete').find('img').attr('src', "img/trash-open.png");
-                $('.delete').css('background-color', '#a70f19')
-            },
-            eventDragStop: (event,jsEvent) => {
-                var trashEl = $('.delete');
-                var ofs = trashEl.offset();
-                var x1 = ofs.left;
-                var x2 = ofs.left + trashEl.outerWidth(true);
-                var y1 = ofs.top;
-                var y2 = ofs.top + trashEl.outerHeight(true);
-                if (jsEvent.pageX >= x1 && jsEvent.pageX<= x2 &&
-                    jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
-                        this.eliminarEvento(event)
-                        $('.calendario').fullCalendar('removeEvents', event.id);
-                    }
-                }
-            })
+        $(document).ready(function(){
+          $('.calendario').fullCalendar({
+              header: {
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'month,agendaWeek,basicDay'
+              },
+              defaultDate: '2016-11-01',
+              navLinks: true,
+              editable: true,
+              eventLimit: true,
+              droppable: true,
+              dragRevertDuration: 0,
+              timeFormat: 'H:mm',
+              eventDrop: (event) => {
+                  this.actualizarEvento(event)
+              },
+              events: eventos,
+              eventDragStart: (event,jsEvent) => {
+                  //$('.delete').find('img').attr('src', "../img/trash-open.png");
+                  $('.delete').css('background-color', '#a70f19')
+              },
+              eventDragStop: (event,jsEvent) => {
+                  var trashEl = $('.delete');
+                  var ofs = trashEl.offset();
+                  var x1 = ofs.left;
+                  var x2 = ofs.left + trashEl.outerWidth(true);
+                  var y1 = ofs.top;
+                  var y2 = ofs.top + trashEl.outerHeight(true);
+                  if (jsEvent.pageX >= x1 && jsEvent.pageX<= x2 &&
+                      jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
+                          this.eliminarEvento(event)
+                          $('.calendario').fullCalendar('removeEvents', event.id);
+                      }
+                  }
+              })
+        })
+
         }
     }
 

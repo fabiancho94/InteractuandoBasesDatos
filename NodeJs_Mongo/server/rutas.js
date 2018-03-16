@@ -1,6 +1,6 @@
 const Router = require('express').Router();
-const Users  = require('./userModel.js');
 const Events  = require('./eventModel.js');
+const Users  = require('./userModel.js');
 
 // Funcion para el login de la pagina
 Router.post('/login', function (req, res){
@@ -9,8 +9,6 @@ Router.post('/login', function (req, res){
   let password = req.body.pass
 
   Users.findOne({user: this.usuario}).exec(function(err, doc){
-    console.log(doc.password);
-    console.log(password);
       if (err) {
           res.status(500)
           res.json(err)
@@ -33,25 +31,40 @@ Router.get('/all', function (req, res){
   })
 
 Router.post('/new', function (req, res){
-  console.log(req);
-  let evento = new Events({
-      title: req.body.title,
-      start: req.body.start,
-      start_hour: req.start_hour,
-      end: req.body.end,
-      end_hour:req.body.end_hour
+  let data = new Events({
+        id: Math.floor(Math.random() * 50),
+        title: req.body.title,
+        start: req.body.start,
+        end: req.body.end
+    })
+  data.save(function (err) {
+    if (err){
+      res.status(500)
+      res.json(err)
+    }
+    res.send("Registro almacenado")
+    })
   })
-  evento.save(function(error) {
-      if (error) {
-          res.status(500)
-          res.json(error)
-      }
-      res.send("Registro guardado")
+
+  Router.post('/delete/:id', function(req, res) {
+
+      Events.remove({id: req.params.id}, function(error) {
+          if(error) {
+              res.status(500)
+              res.json(error)
+          }
+          res.send("Registro eliminado")
+      })
   })
-})
+  Router.post('/update/:id', function(req, res) {
+    Events.find({}).exec((error, resultado)=>{
+      if(error) res.json(error)
+      console.log(resultado);
+      Events.update({id:req.body.id},req.body,(err,act) =>{
+        if(err)res.json(err)
+        res.send("Evento Actualizado")
+      } )
+    })
 
-Router.post('/delete', function (req, res){
-
-})
-
+  })
 module.exports= Router
