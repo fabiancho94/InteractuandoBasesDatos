@@ -31,11 +31,11 @@ Server.listen(PORT, function(){
 
 function usuarioInicial(){
 
-  User.findOne({id: 2}).exec(function(err, res){
+  User.findOne({id: 1}).exec(function(err, res){
       if (err) console.log(err);
       if(!res){
         let nuevo = new User({
-          id: 2,
+          id: 1,
           email:"prueba@test.com",
           password:"1234"})
 
